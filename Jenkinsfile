@@ -30,6 +30,13 @@ pipeline {
                 sh 'npm test || echo "No tests configured"'
             }
         }
+        stage('Secrets Scan') {
+            steps {
+                sh '''
+                gitleaks detect --source . --verbose --redact
+                '''
+            }
+        }
 
         stage('Dependency Scan') {
             steps {

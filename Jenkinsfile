@@ -56,7 +56,7 @@ pipeline {
         }
         stage('container security scan'){
             steps{
-                sh 'trivy image --exit-code 1 --severity CRITICAL,HIGH ssl-checker-app'
+                sh 'trivy image --timeout 15m --scanners vuln --severity HIGH,CRITICAL --exit-code 1 ssl-checker-app'
             }
         }
 

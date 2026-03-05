@@ -40,7 +40,18 @@ pipeline {
 
         stage('Dependency Scan') {
             steps {
-                sh 'npm audit --production || true'
+                sh 'npm audit --audit-level=high || true'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    npx sonar-scanner \
+                    -Dsonar.projectKey=ssl-tls-checker \
+                    -Dsonar.sources=. \
+                    '''
+                }
             }
         }
 

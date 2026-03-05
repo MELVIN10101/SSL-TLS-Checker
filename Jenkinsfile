@@ -54,6 +54,11 @@ pipeline {
                 }
             }
         }
+        stage('container security scan'){
+            steps{
+                sh 'trivy image --exit-code 1 --severity CRITICAL,HIGH ssl-checker-app'
+            }
+        }
 
         stage('Build') {
             steps {
